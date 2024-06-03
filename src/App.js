@@ -27,7 +27,7 @@ function App(props) {
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
       />
-      <ToastContainer autoClose={3000} />
+      <ToastContainer autoClose={2500} />
       <Box sx={{ width: "100%", height: "100svh", pt: 8 }}>
         <Outlet />
       </Box>

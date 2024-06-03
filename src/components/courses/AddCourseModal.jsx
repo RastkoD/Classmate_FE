@@ -9,15 +9,27 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
   const [gradeId, setGradeId] = useState("");
   const [errors, setErrors] = useState({});
 
+  const clearTextFields = () => {
+    setCourseName("");
+    setWeekUnits("");
+    setTermId("");
+    setGradeId("");
+  }
+
   const handleValidation = () => {
     const newErrors = {};
+  
     if (!courseName) newErrors.courseName = "Course name is required";
-    if (weekUnits < 0 || weekUnits > 40)
-      newErrors.weekUnits = "Weekly units must be between 0 and 40";
-    if (termId < 1 || termId > 2)
-      newErrors.termId = "Term ID must be 1 or 2";
-    if (gradeId < 1 || gradeId > 8)
-      newErrors.gradeId = "Grade ID must be between 1 and 8";
+    
+    if (isNaN(weekUnits) || weekUnits < 0 || weekUnits > 40)
+      newErrors.weekUnits = "Weekly units must be a number between 0 and 40";
+    
+    if (isNaN(termId) || termId < 1 || termId > 2)
+      newErrors.termId = "Term ID must be a number between 1 and 2";
+    
+    if (isNaN(gradeId) || gradeId < 1 || gradeId > 8)
+      newErrors.gradeId = "Grade ID must be a number between 1 and 8";
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -32,6 +44,8 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
       };
       handleAddCourse(newCourse);
       handleClose();
+      clearTextFields();
+
     } else {
       toast.error("Please correct the errors in the form");
     }
@@ -47,7 +61,8 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
         width: 400, 
         bgcolor: 'background.paper', 
         boxShadow: 24, 
-        p: 4 
+        p: 4, 
+        borderRadius: "10px"
       }}>
         <Typography variant="h6" component="h2">Add New Course</Typography>
         <TextField
@@ -60,7 +75,7 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
           helperText={errors.courseName}
         />
         <TextField
-          label="Weekly Units"
+          label="Hours per Week"
           fullWidth
           type="number"
           value={weekUnits}
@@ -70,17 +85,7 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
           helperText={errors.weekUnits}
         />
         <TextField
-          label="Term ID"
-          fullWidth
-          type="number"
-          value={termId}
-          onChange={(e) => setTermId(e.target.value)}
-          margin="normal"
-          error={!!errors.termId}
-          helperText={errors.termId}
-        />
-        <TextField
-          label="Grade ID"
+          label="Grade"
           fullWidth
           type="number"
           value={gradeId}
@@ -89,7 +94,17 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
           error={!!errors.gradeId}
           helperText={errors.gradeId}
         />
-        <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ mt: 2 }}>
+        <TextField
+          label="Term"
+          fullWidth
+          type="number"
+          value={termId}
+          onChange={(e) => setTermId(e.target.value)}
+          margin="normal"
+          error={!!errors.termId}
+          helperText={errors.termId}
+        />
+        <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ mt: 2 }} fullWidth>
           Add Course
         </Button>
       </Box>

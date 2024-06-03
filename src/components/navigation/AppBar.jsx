@@ -38,12 +38,12 @@ function AppBarComponent({ handleDrawerToggle }) {
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Stack direction="row">
             <ListItem disablePadding component={NavLink} to="courses">
-              <ListItemButton>
+              <ListItemButton disableRipple>
                 <ListItemText sx={{ color: "white" }} primary="Courses" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding component={NavLink} to="assessments">
-              <ListItemButton>
+              <ListItemButton disableRipple>
                 <ListItemText sx={{ color: "white" }} primary="Assessments" />
               </ListItemButton>
             </ListItem>

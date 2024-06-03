@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import { Typography, Button, Box, } from "@mui/material";
+import { Typography, Button, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import SearchBar from "../utils/SearchBar";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { styled } from "@mui/material/styles";
+import AssessmentModal from "./AssessmentModal";
 import "../../styles/assessments.css";
 
 const Assessments = () => {
   const assessments = useLoaderData();
   const [filteredAssessments, setFilteredAssessments] = useState(assessments);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearch = (value) => {
     setFilteredAssessments(
@@ -56,6 +57,30 @@ const Assessments = () => {
       (a) => a.assessmentId !== assessmentId
     );
     setFilteredAssessments(fa);
+  };
+
+  const handleAddNewAssessment = (newAssessment) => {
+    fetch("http://localhost:8080/api/assessments/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newAssessment),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((err) => { throw err; });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setFilteredAssessments([...filteredAssessments, data]);
+        toast.success("Assessment created successfully");
+      })
+      .catch((err) => {
+        const errorMessage = err.message || "Unknown error";
+        toast.error(`Failed to create assessment: ${errorMessage}`);
+      });
   };
 
   const columns = [
@@ -105,6 +130,7 @@ const Assessments = () => {
         aria-label="add new assessment"
         variant="contained"
         startIcon={<AddIcon />}
+        onClick={() => setIsModalOpen(true)}
       >
         Add New Assessment
       </Button>
@@ -122,6 +148,11 @@ const Assessments = () => {
           getRowId={(row) => row.assessmentId}
         />
       </Box>
+      <AssessmentModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleAddNewAssessment}
+      />
     </div>
   );
 };

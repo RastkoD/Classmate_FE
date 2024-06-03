@@ -28,6 +28,13 @@ const Courses = () => {
     setFilteredCourses(fc);
   };
 
+  const handleEdit = (updatedCourse) => {
+    const updatedCourses = filteredCourses.map((course) =>
+      course.courseId === updatedCourse.courseId ? updatedCourse : course
+    );
+    setFilteredCourses(updatedCourses);
+  };
+
   const handleAddCourse = (newCourse) => {
     fetch("http://localhost:8080/api/courses/create", {
       method: "POST",
@@ -69,7 +76,9 @@ const Courses = () => {
       <SearchBar onSearch={handleSearch} />
       <div className="courses">
         {filteredCourses.map((course) => (
-          <Course key={course.courseId} {...course} onDelete={handleDelete} />
+          <Course key={course.courseId} {...course} onDelete={handleDelete}
+          onEdit={handleEdit}
+          />
         ))}
       </div>
       <AddCourseModal

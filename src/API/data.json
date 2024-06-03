@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "subjectName": "Swords, Bows and Axes",
+    "subjectTeacher": "Aragorn",
+    "subjectLoad": 4,
+    "grade": 5
+  },
+  {
+    "id": 2,
+    "subjectName": "History of the Elves",
+    "subjectTeacher": "Aragorn",
+    "subjectLoad": 3,
+    "grade": 5
+  },
+  {
+    "id": 3,
+    "subjectName": "Dwarven Craftsmanship",
+    "subjectTeacher": "Aragorn",
+    "subjectLoad": 3,
+    "grade": 5
+  },
+  {
+    "id": 4,
+    "subjectName": "Languages of Middle-earth",
+    "subjectTeacher": "Aragorn",
+    "subjectLoad": 5,
+    "grade": 5
+  },  
+  {
+    "id": 5,
+    "subjectName": "Geography of The Shire",
+    "subjectTeacher": "Aragorn",
+    "subjectLoad": 4,
+    "grade": 5
+  },
+  {
+    "id": 6,
+    "subjectName": "Creatures of Middle-earth",
+    "subjectTeacher": "Aragorn",
+    "subjectLoad": 4,
+    "grade": 5
+  }  
+]

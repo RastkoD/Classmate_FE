@@ -47,6 +47,11 @@ function AppBarComponent({ handleDrawerToggle }) {
                 <ListItemText sx={{ color: "white" }} primary="Assessments" />
               </ListItemButton>
             </ListItem>
+            <ListItem disablePadding component={NavLink} to="students">
+              <ListItemButton disableRipple>
+                <ListItemText sx={{ color: "white" }} primary="Students" />
+              </ListItemButton>
+            </ListItem>
           </Stack>
         </Box>
       </Toolbar>

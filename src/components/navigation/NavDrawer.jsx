@@ -43,6 +43,11 @@ function NavDrawer({ window, mobileOpen, handleDrawerToggle }) {
             <ListItemText primary="Assessments" sx={{ textAlign: 'center', color: "black" }} />
           </ListItemButton>
         </ListItem>
+        <ListItem disablePadding component={NavLink} to="students" onClick={handleDrawerToggle}>
+          <ListItemButton>
+            <ListItemText primary="Students" sx={{ textAlign: 'center', color: "black" }} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );

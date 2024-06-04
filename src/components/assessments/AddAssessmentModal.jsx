@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Box, TextField, Button, Typography, MenuItem } from "@mui/material";
 
-const AssessmentModal = ({ open, onClose, onSave }) => {
+const AddAssessmentModal = ({ open, onClose, onSave }) => {
   const [formValues, setFormValues] = useState({
     mark: "",
     comment: "",
@@ -20,16 +20,8 @@ const AssessmentModal = ({ open, onClose, onSave }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // sprecava reload stranice
+    e.preventDefault(); // sprecava reload cele stranice
     onSave(formValues);
-    setFormValues({
-      mark: "",
-      comment: "",
-      assessmentType: "",
-      teacherId: "",
-      courseId: "",
-      studentId: "",
-    });
     onClose();
   };
 
@@ -123,4 +115,4 @@ const style = {
   borderRadius: "10px",
 };
 
-export default AssessmentModal;
+export default AddAssessmentModal;

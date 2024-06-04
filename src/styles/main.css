@@ -24,6 +24,7 @@ p {
   flex-direction: column;*/
   display: grid;
   place-items: center;
+  margin-bottom: 1rem;
 }
 
 .logoLink {

@@ -7,6 +7,7 @@ import { Typography, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import "../../styles/students.css";
+import { motion } from "framer-motion";
 
 const Students = () => {
   const students = useLoaderData();
@@ -62,36 +63,43 @@ const Students = () => {
   };
 
   return (
-    <div className="main">
-      <Typography sx={{ padding: "1rem 0" }} variant="h2">
-        Students
-      </Typography>
-      <Button
-        sx={{ width: "17.1em", padding: "14px 10px" }}
-        aria-label="add new student"
-        variant="contained"
-        startIcon={<AddIcon />}
-        onClick={() => setIsModalOpen(true)}
-      >
-        Add New Student
-      </Button>
-      <SearchBar onSearch={handleSearch} />
-      <div className="students">
-        {filteredStudents.map((student) => (
-          <Student
-            key={student.studentId}
-            {...student}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-          />
-        ))}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+    >
+      <div className="main">
+        <Typography sx={{ padding: "1rem 0" }} variant="h2">
+          Students
+        </Typography>
+        <Button
+          sx={{ width: "17.1em", padding: "14px 10px" }}
+          aria-label="add new student"
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => setIsModalOpen(true)}
+        >
+          Add New Student
+        </Button>
+        <SearchBar onSearch={handleSearch} />
+        <div className="students">
+          {filteredStudents.map((student) => (
+            <Student
+              key={student.studentId}
+              {...student}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+            />
+          ))}
+        </div>
+        <AddStudentModal
+          open={isModalOpen}
+          handleClose={() => setIsModalOpen(false)}
+          handleAddStudent={handleAddStudent}
+        />
       </div>
-      <AddStudentModal
-        open={isModalOpen}
-        handleClose={() => setIsModalOpen(false)}
-        handleAddStudent={handleAddStudent}
-      />
-    </div>
+    </motion.div>
   );
 };
 

@@ -14,22 +14,22 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
     setWeekUnits("");
     setTermId("");
     setGradeId("");
-  }
+  };
 
   const handleValidation = () => {
     const newErrors = {};
-  
+
     if (!courseName) newErrors.courseName = "Course name is required";
-    
+
     if (isNaN(weekUnits) || weekUnits < 0 || weekUnits > 40)
       newErrors.weekUnits = "Weekly units must be a number between 0 and 40";
-    
+
     if (isNaN(termId) || termId < 1 || termId > 2)
       newErrors.termId = "Term ID must be a number between 1 and 2";
-    
+
     if (isNaN(gradeId) || gradeId < 1 || gradeId > 8)
       newErrors.gradeId = "Grade ID must be a number between 1 and 8";
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -45,7 +45,6 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
       handleAddCourse(newCourse);
       handleClose();
       clearTextFields();
-
     } else {
       toast.error("Please correct the errors in the form");
     }
@@ -53,18 +52,22 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={{ 
-        position: 'absolute', 
-        top: '50%', 
-        left: '50%', 
-        transform: 'translate(-50%, -50%)', 
-        width: 400, 
-        bgcolor: 'background.paper', 
-        boxShadow: 24, 
-        p: 4, 
-        borderRadius: "10px"
-      }}>
-        <Typography variant="h6" component="h2">Add New Course</Typography>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 400,
+          bgcolor: "background.paper",
+          boxShadow: 24,
+          p: 4,
+          borderRadius: "10px",
+        }}
+      >
+        <Typography variant="h6" component="h2">
+          Add New Course
+        </Typography>
         <TextField
           label="Course Name"
           fullWidth
@@ -104,7 +107,13 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
           error={!!errors.termId}
           helperText={errors.termId}
         />
-        <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ mt: 2 }} fullWidth>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          sx={{ mt: 2 }}
+          fullWidth
+        >
           Add Course
         </Button>
       </Box>

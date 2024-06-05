@@ -10,6 +10,7 @@ import SearchBar from "../utils/SearchBar";
 import AddAssessmentModal from "./AddAssessmentModal";
 import EditAssessmentModal from "./EditAssessmentModal";
 import "../../styles/assessments.css";
+import { motion } from "framer-motion";
 
 const Assessments = () => {
   const assessments = useLoaderData();
@@ -32,12 +33,15 @@ const Assessments = () => {
 
   const deleteAssessment = async (assessmentId) => {
     try {
-      const res = await fetch(`http://localhost:8080/api/assessments/delete/${assessmentId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        `http://localhost:8080/api/assessments/delete/${assessmentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (res.ok) {
         toast.success("Assessment deleted successfully");
@@ -46,7 +50,9 @@ const Assessments = () => {
         const err = await res.json();
         const errorMessage = err.error || "Unknown error";
         const status = err.status || "Unknown status";
-        toast.error(`Failed to delete assessment: ${errorMessage} (Status: ${status})`);
+        toast.error(
+          `Failed to delete assessment: ${errorMessage} (Status: ${status})`
+        );
       }
     } catch (error) {
       console.error("Error deleting assessment:", error);
@@ -63,13 +69,16 @@ const Assessments = () => {
 
   const handleAddNewAssessment = async (newAssessment) => {
     try {
-      const response = await fetch("http://localhost:8080/api/assessments/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newAssessment),
-      });
+      const response = await fetch(
+        "http://localhost:8080/api/assessments/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newAssessment),
+        }
+      );
 
       if (!response.ok) {
         const err = await response.json();
@@ -87,13 +96,16 @@ const Assessments = () => {
 
   const handleEditAssessment = async (updatedAssessment) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/assessments/update/${updatedAssessment.assessmentId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedAssessment),
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/assessments/update/${updatedAssessment.assessmentId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedAssessment),
+        }
+      );
 
       if (!response.ok) {
         const err = await response.json();
@@ -137,6 +149,7 @@ const Assessments = () => {
           aria-label="edit"
           variant="outlined"
           startIcon={<EditIcon />}
+          color="info"
         >
           Edit
         </Button>
@@ -161,47 +174,54 @@ const Assessments = () => {
   ];
 
   return (
-    <div className="mainAssess">
-      <Typography sx={{ padding: "1rem 0" }} variant="h2">
-        Assessments
-      </Typography>
-      <Button
-        sx={{ width: "17.1em", padding: "14px 10px" }}
-        aria-label="add new assessment"
-        variant="contained"
-        startIcon={<AddIcon />}
-        onClick={() => setIsAddModalOpen(true)}
-      >
-        Add New Assessment
-      </Button>
-      <SearchBar onSearch={handleSearch} />
-      <Box sx={{ height: 600, width: "80%" }}>
-        <DataGrid
-          rows={filteredAssessments}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 20]}
-          getRowId={(row) => row.assessmentId}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+    >
+      <div className="mainAssess">
+        <Typography sx={{ padding: "1rem 0" }} variant="h2">
+          Assessments
+        </Typography>
+        <Button
+          sx={{ width: "17.1em", padding: "14px 10px" }}
+          aria-label="add new assessment"
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => setIsAddModalOpen(true)}
+        >
+          Add New Assessment
+        </Button>
+        <SearchBar onSearch={handleSearch} />
+        <Box sx={{ height: 600, width: "80%" }}>
+          <DataGrid
+            rows={filteredAssessments}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[5, 10, 20]}
+            getRowId={(row) => row.assessmentId}
+          />
+        </Box>
+        <AddAssessmentModal
+          open={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
+          onSave={handleAddNewAssessment}
         />
-      </Box>
-      <AddAssessmentModal
-        open={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onSave={handleAddNewAssessment}
-      />
-      {currentAssessment && (
-        <EditAssessmentModal
-          open={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          onSave={handleEditAssessment}
-          initialData={currentAssessment}
-        />
-      )}
-    </div>
+        {currentAssessment && (
+          <EditAssessmentModal
+            open={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            onSave={handleEditAssessment}
+            initialData={currentAssessment}
+          />
+        )}
+      </div>
+    </motion.div>
   );
 };
 

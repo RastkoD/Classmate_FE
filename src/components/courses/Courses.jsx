@@ -7,6 +7,7 @@ import { Typography, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import "../../styles/courses.css";
+import { motion } from "framer-motion";
 
 const Courses = () => {
   const courses = useLoaderData();
@@ -45,7 +46,9 @@ const Courses = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          return response.json().then((err) => { throw err; });
+          return response.json().then((err) => {
+            throw err;
+          });
         }
         return response.json();
       })
@@ -60,33 +63,43 @@ const Courses = () => {
   };
 
   return (
-    <div className="main">
-      <Typography sx={{ padding: "1rem 0" }} variant="h2">
-        Courses
-      </Typography>
-      <Button
-        sx={{ width: "17.1em", padding: "14px 10px" }}
-        aria-label="add new course"
-        variant="contained"
-        startIcon={<AddIcon />}
-        onClick={() => setIsModalOpen(true)}
-      >
-        Add New Course
-      </Button>
-      <SearchBar onSearch={handleSearch} />
-      <div className="courses">
-        {filteredCourses.map((course) => (
-          <Course key={course.courseId} {...course} onDelete={handleDelete}
-          onEdit={handleEdit}
-          />
-        ))}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+    >
+      <div className="main">
+        <Typography sx={{ padding: "1rem 0" }} variant="h2">
+          Courses
+        </Typography>
+        <Button
+          sx={{ width: "17.1em", padding: "14px 10px" }}
+          aria-label="add new course"
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => setIsModalOpen(true)}
+        >
+          Add New Course
+        </Button>
+        <SearchBar onSearch={handleSearch} />
+        <div className="courses">
+          {filteredCourses.map((course) => (
+            <Course
+              key={course.courseId}
+              {...course}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+            />
+          ))}
+        </div>
+        <AddCourseModal
+          open={isModalOpen}
+          handleClose={() => setIsModalOpen(false)}
+          handleAddCourse={handleAddCourse}
+        />
       </div>
-      <AddCourseModal
-        open={isModalOpen}
-        handleClose={() => setIsModalOpen(false)}
-        handleAddCourse={handleAddCourse}
-      />
-    </div>
+    </motion.div>
   );
 };
 

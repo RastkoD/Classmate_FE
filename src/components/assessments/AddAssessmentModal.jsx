@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Modal, Box, TextField, Button, Typography, MenuItem } from "@mui/material";
+import {
+  Modal,
+  Box,
+  TextField,
+  Button,
+  Typography,
+  MenuItem,
+} from "@mui/material";
 
 const AddAssessmentModal = ({ open, onClose, onSave }) => {
   const [formValues, setFormValues] = useState({
@@ -94,7 +101,13 @@ const AddAssessmentModal = ({ open, onClose, onSave }) => {
             onChange={handleChange}
             required
           />
-          <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }} fullWidth>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }}
+            fullWidth
+          >
             Add Assessment
           </Button>
         </form>
@@ -104,11 +117,11 @@ const AddAssessmentModal = ({ open, onClose, onSave }) => {
 };
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
   width: 400,

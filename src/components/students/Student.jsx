@@ -43,13 +43,16 @@ const Student = ({
   };
 
   const editStudent = async () => {
-    let res = await fetch(`http://localhost:8080/api/students/update/${studentId}`, {
-    method: "PUT",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(editStudentData),
-});
+    let res = await fetch(
+      `http://localhost:8080/api/students/update/${studentId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editStudentData),
+      }
+    );
 
     if (res.ok) {
       let updatedStudent = await res.json();
@@ -124,6 +127,7 @@ const Student = ({
               aria-label="edit"
               variant="outlined"
               startIcon={<EditIcon />}
+              color="info"
             >
               Edit
             </Button>

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Box,
@@ -13,6 +14,18 @@ import {
 import { Close } from "@mui/icons-material";
 
 function NavDrawer({ window, mobileOpen, handleDrawerToggle }) {
+  const [user, setUser] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const u = localStorage.getItem("user");
+    console.log(u);
+    if (u) {
+      setUser(JSON.parse(u));
+      setIsLogin(true);
+    }
+  }, [isLogin]);
+
   const drawer = (
     <Box sx={{ textAlign: "center" }}>
       <Box
@@ -33,21 +46,72 @@ function NavDrawer({ window, mobileOpen, handleDrawerToggle }) {
       </Box>
       <Divider />
       <List>
-        <ListItem disablePadding component={NavLink} to="courses" onClick={handleDrawerToggle}>
-          <ListItemButton>
-            <ListItemText primary="Courses" sx={{ textAlign: 'center', color: "black" }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding component={NavLink} to="assessments" onClick={handleDrawerToggle}>
-          <ListItemButton>
-            <ListItemText primary="Assessments" sx={{ textAlign: 'center', color: "black" }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding component={NavLink} to="students" onClick={handleDrawerToggle}>
-          <ListItemButton>
-            <ListItemText primary="Students" sx={{ textAlign: 'center', color: "black" }} />
-          </ListItemButton>
-        </ListItem>
+        {isLogin && user.role === "admin" ? (
+          <ListItem
+            disablePadding
+            component={NavLink}
+            to="courses"
+            onClick={handleDrawerToggle}
+          >
+            <ListItemButton>
+              <ListItemText
+                primary="Courses"
+                sx={{ textAlign: "center", color: "black" }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ) : (
+          <></>
+        )}
+        {isLogin && user.role === "admin" ? (
+          <ListItem
+            disablePadding
+            component={NavLink}
+            to="assessments"
+            onClick={handleDrawerToggle}
+          >
+            <ListItemButton>
+              <ListItemText
+                primary="Assessments"
+                sx={{ textAlign: "center", color: "black" }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ) : (
+          <></>
+        )}
+        {isLogin && user.role === "admin" ? (
+          <ListItem
+            disablePadding
+            component={NavLink}
+            to="students"
+            onClick={handleDrawerToggle}
+          >
+            <ListItemButton>
+              <ListItemText
+                primary="Students"
+                sx={{ textAlign: "center", color: "black" }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ) : (
+          <></>
+        )}
+        {isLogin && user.role === "guardian" ? (
+          <ListItem
+            disablePadding
+            component={NavLink}
+            to={`/assessments/student/${user.wardId}`}
+            onClick={handleDrawerToggle}
+          >
+            <ListItemButton>
+              <ListItemText
+                primary="Assessments"
+                sx={{ textAlign: "center", color: "black" }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ) : null}
       </List>
     </Box>
   );

@@ -14,62 +14,65 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
 
-const Course = ({
-  courseId,
-  courseName,
-  termId,
-  weekUnits,
-  gradeId,
+const Student = ({
+  studentId,
+  username,
+  firstName,
+  lastName,
+  password,
+  jmbg,
   onDelete,
   onEdit,
 }) => {
   const [open, setOpen] = useState(false);
-  const [editCourseData, setEditCourseData] = useState({
-    courseId,
-    courseName,
-    termId,
-    weekUnits,
-    gradeId,
+  const [editStudentData, setEditStudentData] = useState({
+    studentId,
+    username,
+    firstName,
+    lastName,
+    password,
+    jmbg,
   });
 
+  console.log(studentId);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditCourseData({ ...editCourseData, [name]: value });
+    setEditStudentData({ ...editStudentData, [name]: value });
   };
 
-  const editCourse = async () => {
+  const editStudent = async () => {
     let res = await fetch(
-      `http://localhost:8080/api/courses/update/${courseId}`,
+      `http://localhost:8080/api/students/update/${studentId}`,
       {
-        method: "PUT", // za update je PUT! PUT! PUT! PUT!
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(editCourseData),
+        body: JSON.stringify(editStudentData),
       }
     );
 
     if (res.ok) {
-      let updatedCourse = await res.json();
-      toast.success("Course updated successfully");
-      onEdit(updatedCourse);
+      let updatedStudent = await res.json();
+      toast.success("Student's info updated successfully");
+      onEdit(updatedStudent);
       handleClose();
     } else {
       let err = await res.json();
       const errorMessage = err.error || "Unknown error";
       const status = err.status || "Unknown status";
       toast.error(
-        `Failed to update course: ${errorMessage} (Status: ${status})`
+        `Failed to update student's info: ${errorMessage} (Status: ${status})`
       );
     }
   };
 
-  const deleteCourse = async () => {
+  const deleteStudent = async () => {
     let res = await fetch(
-      `http://localhost:8080/api/courses/delete/${courseId}`,
+      `http://localhost:8080/api/students/delete/${studentId}`,
       {
         method: "DELETE",
         headers: {
@@ -80,21 +83,21 @@ const Course = ({
 
     if (res.ok) {
       let d = await res.json();
-      toast.success("Course deleted successfully");
-      onDelete(courseId);
+      toast.success("Student deleted successfully");
+      onDelete(studentId);
     } else {
       let err = await res.json();
       const errorMessage = err.error || "Unknown error";
       const status = err.status || "Unknown status";
       toast.error(
-        `Failed to delete course: ${errorMessage} (Status: ${status})`
+        `Failed to delete student: ${errorMessage} (Status: ${status})`
       );
     }
   };
 
   return (
     <>
-      <Card className="course">
+      <Card className="student">
         <CardContent
           sx={{
             padding: "1rem",
@@ -105,12 +108,12 @@ const Course = ({
           }}
         >
           <Stack>
-            <Typography variant="h5">{courseName}</Typography>
-            <Typography variant="subtitle1">Week Units: {weekUnits}</Typography>
+            <Typography variant="h5">{`${firstName} ${lastName}`}</Typography>
+            <Typography variant="subtitle1">Username: {username}</Typography>
           </Stack>
           <Stack>
-            <Typography variant="body1">Grade: {gradeId}</Typography>
-            <Typography variant="body1">Term: {termId}</Typography>
+            <Typography variant="body1">Password: {password}</Typography>
+            <Typography variant="body1">SSN: {jmbg}</Typography>
           </Stack>
         </CardContent>
         <CardActions sx={{ padding: "1rem" }}>
@@ -121,7 +124,7 @@ const Course = ({
             justifyContent="space-between"
           >
             <Button
-              onClick={handleOpen}
+              onMouseDown={handleOpen}
               aria-label="edit"
               variant="outlined"
               startIcon={<EditIcon />}
@@ -130,7 +133,7 @@ const Course = ({
               Edit
             </Button>
             <Button
-              onClick={deleteCourse}
+              onMouseDown={deleteStudent}
               aria-label="delete"
               variant="outlined"
               color="error"
@@ -157,39 +160,39 @@ const Course = ({
           }}
         >
           <Typography variant="h6" component="h2">
-            Edit Course
+            Edit Student
           </Typography>
           <Stack spacing={2}>
             <TextField
-              label="Course Name"
-              name="courseName"
-              value={editCourseData.courseName}
+              label="First Name"
+              name="firstName"
+              value={editStudentData.firstName}
               onChange={handleInputChange}
               fullWidth
             />
             <TextField
-              label="Week Units"
-              name="weekUnits"
-              value={editCourseData.weekUnits}
+              label="Last Name"
+              name="lastName"
+              value={editStudentData.lastName}
               onChange={handleInputChange}
               fullWidth
             />
             <TextField
-              label="Grade"
-              name="gradeId"
-              value={editCourseData.gradeId}
+              label="Password"
+              name="password"
+              value={editStudentData.password}
               onChange={handleInputChange}
               fullWidth
             />
             <TextField
-              label="Term"
-              name="termId"
-              value={editCourseData.termId}
+              label="JMBG"
+              name="jmbg"
+              value={editStudentData.jmbg}
               onChange={handleInputChange}
               fullWidth
             />
             <Button
-              onClick={editCourse}
+              onClick={editStudent}
               variant="contained"
               color="primary"
               fullWidth
@@ -203,4 +206,4 @@ const Course = ({
   );
 };
 
-export default Course;
+export default Student;

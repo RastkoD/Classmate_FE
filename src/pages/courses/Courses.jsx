@@ -1,48 +1,49 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import Student from "./Student";
-import SearchBar from "../utils/SearchBar";
-import AddStudentModal from "./AddStudentModal";
+import Course from "./components/Course";
+import SearchBar from "../../components/utils/SearchBar";
+import AddCourseModal from "./components/AddCourseModal";
 import { Typography, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
-import "../../styles/students.css";
+import "../../styles/courses.css";
 import { motion } from "framer-motion";
+import { API_ENDPOINTS } from "../../API/config/config";
 
-const Students = () => {
-  const students = useLoaderData();
-  const [filteredStudents, setFilteredStudents] = useState(students);
+const Courses = () => {
+  const courses = useLoaderData();
+  const [filteredCourses, setFilteredCourses] = useState(courses);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearch = (value) => {
-    setFilteredStudents(
+    setFilteredCourses(
       value
-        ? students.filter((student) =>
-            student.username.toLowerCase().includes(value.toLowerCase())
+        ? courses.filter((course) =>
+            course.courseName.toLowerCase().includes(value.toLowerCase())
           )
-        : students
+        : courses
     );
   };
 
-  const handleDelete = (studentId) => {
-    const fs = filteredStudents.filter((s) => s.studentId !== studentId);
-    setFilteredStudents(fs);
+  const handleDelete = (courseId) => {
+    const fc = filteredCourses.filter((c) => c.courseId !== courseId);
+    setFilteredCourses(fc);
   };
 
-  const handleEdit = (updatedStudent) => {
-    const updatedStudents = filteredStudents.map((student) =>
-      student.studentId === updatedStudent.studentId ? updatedStudent : student
+  const handleEdit = (updatedCourse) => {
+    const updatedCourses = filteredCourses.map((course) =>
+      course.courseId === updatedCourse.courseId ? updatedCourse : course
     );
-    setFilteredStudents(updatedStudents);
+    setFilteredCourses(updatedCourses);
   };
 
-  const handleAddStudent = (newStudent) => {
-    fetch("http://localhost:8080/api/students/create", {
+  const handleAddCourse = (newCourse) => {
+    fetch(API_ENDPOINTS.courses.create, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newStudent),
+      body: JSON.stringify(newCourse),
     })
       .then((response) => {
         if (!response.ok) {
@@ -53,12 +54,12 @@ const Students = () => {
         return response.json();
       })
       .then((data) => {
-        setFilteredStudents([...filteredStudents, data]);
-        toast.success("Student added successfully");
+        setFilteredCourses([...filteredCourses, data]);
+        toast.success("Course created successfully");
       })
       .catch((err) => {
         const errorMessage = err.message || "Unknown error";
-        toast.error(`Failed to add student: ${errorMessage}`);
+        toast.error(`Failed to create course: ${errorMessage}`);
       });
   };
 
@@ -71,36 +72,36 @@ const Students = () => {
     >
       <div className="main">
         <Typography sx={{ padding: "1rem 0" }} variant="h2">
-          Students
+          Courses
         </Typography>
         <Button
           sx={{ width: "17.1em", padding: "14px 10px" }}
-          aria-label="add new student"
+          aria-label="add new course"
           variant="contained"
           startIcon={<AddIcon />}
-          onClick={() => setIsModalOpen(true)}
+          onMouseDown={() => setIsModalOpen(true)}
         >
-          Add New Student
+          Add New Course
         </Button>
         <SearchBar onSearch={handleSearch} />
-        <div className="students">
-          {filteredStudents.map((student) => (
-            <Student
-              key={student.studentId}
-              {...student}
+        <div className="courses">
+          {filteredCourses.map((course) => (
+            <Course
+              key={course.courseId}
+              {...course}
               onDelete={handleDelete}
               onEdit={handleEdit}
             />
           ))}
         </div>
-        <AddStudentModal
+        <AddCourseModal
           open={isModalOpen}
           handleClose={() => setIsModalOpen(false)}
-          handleAddStudent={handleAddStudent}
+          handleAddCourse={handleAddCourse}
         />
       </div>
     </motion.div>
   );
 };
 
-export default Students;
+export default Courses;

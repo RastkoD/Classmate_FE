@@ -77,7 +77,7 @@ function App(props) {
             />
             <ToastContainer autoClose={2500} />
             <Box sx={{ width: "100%", height: "100svh", pt: 8 }}>
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
               <Routes>
                   <Route path="/" element={<WelcomeMessage />} />
                 </Routes>

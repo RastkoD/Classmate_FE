@@ -100,7 +100,7 @@ const AddStudentModal = ({ open, handleClose, handleAddStudent }) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleSubmit}
+          onMouseDown={handleSubmit}
           sx={{ mt: 2 }}
           fullWidth
         >

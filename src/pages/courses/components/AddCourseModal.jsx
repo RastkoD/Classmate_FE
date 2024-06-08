@@ -110,7 +110,7 @@ const AddCourseModal = ({ open, handleClose, handleAddCourse }) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleSubmit}
+          onMouseDown={handleSubmit}
           sx={{ mt: 2 }}
           fullWidth
         >

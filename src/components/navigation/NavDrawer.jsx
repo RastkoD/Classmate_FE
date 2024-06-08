@@ -39,7 +39,7 @@ function NavDrawer({ window, mobileOpen, handleDrawerToggle }) {
         <IconButton
           color="inherit"
           aria-label="close drawer"
-          onClick={handleDrawerToggle}
+          onMouseDown={handleDrawerToggle}
         >
           <Close />
         </IconButton>
@@ -51,7 +51,7 @@ function NavDrawer({ window, mobileOpen, handleDrawerToggle }) {
             disablePadding
             component={NavLink}
             to="courses"
-            onClick={handleDrawerToggle}
+            onMouseDown={handleDrawerToggle}
           >
             <ListItemButton>
               <ListItemText
@@ -68,7 +68,7 @@ function NavDrawer({ window, mobileOpen, handleDrawerToggle }) {
             disablePadding
             component={NavLink}
             to="assessments"
-            onClick={handleDrawerToggle}
+            onMouseDown={handleDrawerToggle}
           >
             <ListItemButton>
               <ListItemText
@@ -85,7 +85,7 @@ function NavDrawer({ window, mobileOpen, handleDrawerToggle }) {
             disablePadding
             component={NavLink}
             to="students"
-            onClick={handleDrawerToggle}
+            onMouseDown={handleDrawerToggle}
           >
             <ListItemButton>
               <ListItemText
@@ -102,7 +102,7 @@ function NavDrawer({ window, mobileOpen, handleDrawerToggle }) {
             disablePadding
             component={NavLink}
             to={`/assessments/student/${user.wardId}`}
-            onClick={handleDrawerToggle}
+            onMouseDown={handleDrawerToggle}
           >
             <ListItemButton>
               <ListItemText

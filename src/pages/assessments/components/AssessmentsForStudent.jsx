@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { Typography, Box } from "@mui/material";
-import SearchBar from "../utils/SearchBar";
+import SearchBar from "../../../components/utils/SearchBar";
 import { motion } from "framer-motion";
 
 const AssessmentsForStudent = () => {

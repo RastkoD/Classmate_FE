@@ -1,48 +1,48 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import Course from "./Course";
-import SearchBar from "../utils/SearchBar";
-import AddCourseModal from "./AddCourseModal";
+import Student from "./components/Student";
+import SearchBar from "../../components/utils/SearchBar";
+import AddStudentModal from "./components/AddStudentModal";
 import { Typography, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
-import "../../styles/courses.css";
+import "../../styles/students.css";
 import { motion } from "framer-motion";
 
-const Courses = () => {
-  const courses = useLoaderData();
-  const [filteredCourses, setFilteredCourses] = useState(courses);
+const Students = () => {
+  const students = useLoaderData();
+  const [filteredStudents, setFilteredStudents] = useState(students);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearch = (value) => {
-    setFilteredCourses(
+    setFilteredStudents(
       value
-        ? courses.filter((course) =>
-            course.courseName.toLowerCase().includes(value.toLowerCase())
+        ? students.filter((student) =>
+            student.username.toLowerCase().includes(value.toLowerCase())
           )
-        : courses
+        : students
     );
   };
 
-  const handleDelete = (courseId) => {
-    const fc = filteredCourses.filter((c) => c.courseId !== courseId);
-    setFilteredCourses(fc);
+  const handleDelete = (studentId) => {
+    const fs = filteredStudents.filter((s) => s.studentId !== studentId);
+    setFilteredStudents(fs);
   };
 
-  const handleEdit = (updatedCourse) => {
-    const updatedCourses = filteredCourses.map((course) =>
-      course.courseId === updatedCourse.courseId ? updatedCourse : course
+  const handleEdit = (updatedStudent) => {
+    const updatedStudents = filteredStudents.map((student) =>
+      student.studentId === updatedStudent.studentId ? updatedStudent : student
     );
-    setFilteredCourses(updatedCourses);
+    setFilteredStudents(updatedStudents);
   };
 
-  const handleAddCourse = (newCourse) => {
-    fetch("http://localhost:8080/api/courses/create", {
+  const handleAddStudent = (newStudent) => {
+    fetch("http://localhost:8080/api/students/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newCourse),
+      body: JSON.stringify(newStudent),
     })
       .then((response) => {
         if (!response.ok) {
@@ -53,12 +53,12 @@ const Courses = () => {
         return response.json();
       })
       .then((data) => {
-        setFilteredCourses([...filteredCourses, data]);
-        toast.success("Course created successfully");
+        setFilteredStudents([...filteredStudents, data]);
+        toast.success("Student added successfully");
       })
       .catch((err) => {
         const errorMessage = err.message || "Unknown error";
-        toast.error(`Failed to create course: ${errorMessage}`);
+        toast.error(`Failed to add student: ${errorMessage}`);
       });
   };
 
@@ -71,36 +71,36 @@ const Courses = () => {
     >
       <div className="main">
         <Typography sx={{ padding: "1rem 0" }} variant="h2">
-          Courses
+          Students
         </Typography>
         <Button
           sx={{ width: "17.1em", padding: "14px 10px" }}
-          aria-label="add new course"
+          aria-label="add new student"
           variant="contained"
           startIcon={<AddIcon />}
-          onClick={() => setIsModalOpen(true)}
+          onMouseDown={() => setIsModalOpen(true)}
         >
-          Add New Course
+          Add New Student
         </Button>
         <SearchBar onSearch={handleSearch} />
-        <div className="courses">
-          {filteredCourses.map((course) => (
-            <Course
-              key={course.courseId}
-              {...course}
+        <div className="students">
+          {filteredStudents.map((student) => (
+            <Student
+              key={student.studentId}
+              {...student}
               onDelete={handleDelete}
               onEdit={handleEdit}
             />
           ))}
         </div>
-        <AddCourseModal
+        <AddStudentModal
           open={isModalOpen}
           handleClose={() => setIsModalOpen(false)}
-          handleAddCourse={handleAddCourse}
+          handleAddStudent={handleAddStudent}
         />
       </div>
     </motion.div>
   );
 };
 
-export default Courses;
+export default Students;

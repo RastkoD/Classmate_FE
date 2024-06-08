@@ -6,9 +6,9 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
-import SearchBar from "../utils/SearchBar";
-import AddAssessmentModal from "./AddAssessmentModal";
-import EditAssessmentModal from "./EditAssessmentModal";
+import SearchBar from "../../components/utils/SearchBar";
+import AddAssessmentModal from "./components/AddAssessmentModal";
+import EditAssessmentModal from "./components/EditAssessmentModal";
 import "../../styles/assessments.css";
 import { motion } from "framer-motion";
 
@@ -145,7 +145,7 @@ const Assessments = () => {
       width: 150,
       renderCell: (params) => (
         <Button
-          onClick={() => handleEditButtonClick(params.row)}
+        onMouseDown={() => handleEditButtonClick(params.row)}
           aria-label="edit"
           variant="outlined"
           startIcon={<EditIcon />}
@@ -161,7 +161,7 @@ const Assessments = () => {
       width: 150,
       renderCell: (params) => (
         <Button
-          onClick={() => deleteAssessment(params.row.assessmentId)}
+        onMouseDown={() => deleteAssessment(params.row.assessmentId)}
           aria-label="delete"
           variant="outlined"
           color="error"
@@ -189,7 +189,7 @@ const Assessments = () => {
           aria-label="add new assessment"
           variant="contained"
           startIcon={<AddIcon />}
-          onClick={() => setIsAddModalOpen(true)}
+          onMouseDown={() => setIsAddModalOpen(true)}
         >
           Add New Assessment
         </Button>

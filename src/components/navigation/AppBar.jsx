@@ -16,7 +16,6 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { Brightness4, Logout } from "@mui/icons-material";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { color } from "framer-motion";
 
 function AppBarComponent({ handleDrawerToggle, setShowModal, toggleTheme }) {
   const navigate = useNavigate();
@@ -74,7 +73,7 @@ function AppBarComponent({ handleDrawerToggle, setShowModal, toggleTheme }) {
           color="inherit"
           aria-label="open drawer"
           edge="start"
-          onClick={handleDrawerToggle}
+          onMouseDown={handleDrawerToggle}
           sx={{ display: { sm: "none" } }}
         >
           <MenuIcon />
@@ -128,7 +127,7 @@ function AppBarComponent({ handleDrawerToggle, setShowModal, toggleTheme }) {
                 disablePadding
                 component={NavLink}
                 to={`/assessments/student/${user.wardId}`}
-                onClick={handleDrawerToggle}
+                onMouseDown={handleDrawerToggle}
               >
                 <ListItemButton disableRipple>
                   <ListItemText primary="Assessments" sx={{ color: "white" }} />
@@ -136,7 +135,7 @@ function AppBarComponent({ handleDrawerToggle, setShowModal, toggleTheme }) {
               </ListItem>
             ) : null}
             <ListItem disablePadding>
-              <IconButton color="inherit" onClick={handleMenuOpen}>
+              <IconButton color="inherit" onMouseDown={handleMenuOpen}>
                 <SettingsIcon />
               </IconButton>
             </ListItem>
@@ -147,11 +146,11 @@ function AppBarComponent({ handleDrawerToggle, setShowModal, toggleTheme }) {
           open={Boolean(menuAnchor)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleThemeToggle}>
+          <MenuItem onMouseDown={handleThemeToggle}>
             <Brightness4 fontSize="small" />
             <ListItemText>Dark/Light Mode</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleLogout}>
+          <MenuItem onMouseDown={handleLogout}>
             <Logout fontSize="small" />
             <ListItemText>Sign out</ListItemText>
           </MenuItem>

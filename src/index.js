@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Courses from './components/courses/Courses';
-import Assessments from './components/assessments/Assessments';
-import Students from './components/students/Students';
-import AssessmentsForStudent from './components/assessments/AssessmentsForStudent';
+import Courses from './pages/courses/Courses';
+import Assessments from './pages/assessments/Assessments';
+import Students from './pages/students/Students';
+import AssessmentsForStudent from './pages/assessments/components/AssessmentsForStudent';
 
 const router = createBrowserRouter([
   {

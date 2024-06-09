@@ -50,6 +50,7 @@ function AppBarComponent({ handleDrawerToggle, setShowModal, toggleTheme }) {
 
   const handleThemeToggle = () => {
     toggleTheme();
+    handleMenuClose();
   };
 
   const activeStyle = {
@@ -80,48 +81,60 @@ function AppBarComponent({ handleDrawerToggle, setShowModal, toggleTheme }) {
         </IconButton>
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Stack direction="row">
+            <ListItem disablePadding component={NavLink} to="/">
+              <ListItemButton disableRipple>
+                <ListItemText sx={{ color: "white" }} primary="Home" />
+              </ListItemButton>
+            </ListItem>
             {isLogin && user.role === "admin" ? (
-              <ListItem
-                disablePadding
-                component={NavLink}
-                to="courses"
-                style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              >
-                <ListItemButton disableRipple>
-                  <ListItemText sx={{ color: "white" }} primary="Courses" />
-                </ListItemButton>
-              </ListItem>
-            ) : (
-              <></>
-            )}
-            {isLogin && user.role === "admin" ? (
-              <ListItem
-                disablePadding
-                component={NavLink}
-                to="assessments"
-                style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              >
-                <ListItemButton disableRipple>
-                  <ListItemText sx={{ color: "white" }} primary="Assessments" />
-                </ListItemButton>
-              </ListItem>
-            ) : (
-              <></>
-            )}
-            {isLogin && user.role === "admin" ? (
-              <ListItem
-                disablePadding
-                component={NavLink}
-                to="students"
-                style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              >
-                <ListItemButton disableRipple>
-                  <ListItemText sx={{ color: "white" }} primary="Students" />
-                </ListItemButton>
-              </ListItem>
-            ) : (
-              <></>
-            )}
+              <>
+                <ListItem
+                  disablePadding
+                  component={NavLink}
+                  to="/download-logs"
+                >
+                  <ListItemButton disableRipple>
+                    <ListItemText
+                      sx={{ color: "white", width: "max-content" }}
+                      primary="Download Logs"
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem
+                  disablePadding
+                  component={NavLink}
+                  to="courses"
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                >
+                  <ListItemButton disableRipple>
+                    <ListItemText sx={{ color: "white" }} primary="Courses" />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem
+                  disablePadding
+                  component={NavLink}
+                  to="assessments"
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                >
+                  <ListItemButton disableRipple>
+                    <ListItemText
+                      sx={{ color: "white" }}
+                      primary="Assessments"
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem
+                  disablePadding
+                  component={NavLink}
+                  to="students"
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                >
+                  <ListItemButton disableRipple>
+                    <ListItemText sx={{ color: "white" }} primary="Students" />
+                  </ListItemButton>
+                </ListItem>
+              </>
+            ) : null}
             {isLogin && user.role === "guardian" ? (
               <ListItem
                 disablePadding
